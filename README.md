@@ -2,6 +2,53 @@ This is very work-in-progress but, in general, a central point to keep track
 of Loopback's various idiosyncrasies and define some best practices when
 working with Loopback.
 
+### Project Structure
+
+Prefer more, smaller files.
+
+*Why?:* Mostly common sense.
+
+*Why?:* It's far easier to navigate and maintain and results in less git conflicts when
+compared to large, monolithic files.
+
+```javascript
+/* Avoid */
+// roles.js
+module.exports = function(app) {
+  function roleResolverA() {
+    // Role resolver definition for Role A
+  }
+
+  function roleResolverB() {
+    // Role resolver definition for Role B
+  }
+
+  function roleResolverC() {
+    // Role resolver definition for Role C
+  }
+
+  // etc...
+}
+```
+
+```javascript
+/* Prefer */
+// roles.js
+module.exports = function(app) {
+  require('roles/roleA')(app);
+  require('roles/roleB')(app);
+  require('roles/roleC')(app);
+}
+
+// roles/roleA.js
+module.exports = function(app) {
+  // Role resolver definition for Role A
+}
+
+// roles/roleB.js
+// etc...
+```
+
 ### Model Definitions
 Keep custom model methods at the top of the file and refer to named functions
 defined later, rather than anonymous functions.
