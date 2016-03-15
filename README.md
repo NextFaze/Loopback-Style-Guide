@@ -149,3 +149,81 @@ Model.beforeRemote('updateAttributes', interceptUpdate);
 /* WILL work */
 Model.beforeRemote('prototype.updateAttributes', interceptUpdate);
 ```
+
+
+### Promises
+
+Prefer promises over callbacks
+
+*Why?*: Promises generally lead to neater, more readable code
+
+*Why?*: It's easier to separate out components in a promise chain into separate functions
+
+**NOTE** Not all built in Loopback methods are promisified, and some have broken promises: (https://github.com/strongloop/loopback/issues/418#issue-38984704)[https://github.com/strongloop/loopback/issues/418#issue-38984704].
+In cases where promises are not supported, prefer to add custom promises over using callbacks for the reasons stated above
+
+```javascript
+/* Avoid */
+modelInstance.save(function(err, result) {
+  if(err) {
+    throw err;
+  }
+  cb(null, result);
+})
+```
+
+```javascript
+/* Avoid */
+modelInstance.save()
+.then(function(result) {
+  cb(null, result);
+})
+.catch(function(err) {
+  throw err;
+})
+```
+
+Prefer named functions over long anonymous functions in promise chains
+
+*Why?*: It's much easier to read and allows other developers to quickly scan
+and get an overall sense of what is happening in the promise chain
+
+```javascript
+/* Avoid */
+modelInstance.save()
+.then(function(result) {
+  // Put left foot in
+  return somePromise()
+})
+.then(function(result) {
+  // Put left foot out
+  return somePromise()
+})
+.then(function(result) {
+  // Put left foot in
+  return somePromise()
+})
+.then(function(result) {
+  // Shake it all about
+  return somePromise()
+})
+.catch(function(err) {
+  throw err;
+})
+```
+
+```javascript
+/* Prefer */
+modelInstance.save()
+.then(putLeftFootIn)
+.then(putLeftFootOut)
+.then(putLeftFootIn)
+.then(shakeItAllAbout)
+.catch(handleError);
+
+function putLeftFootIn() {
+  // Put left foot in
+  return somePromise;
+}
+// ... etc
+```
