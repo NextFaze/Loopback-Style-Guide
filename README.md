@@ -50,6 +50,8 @@ module.exports = function(app) {
 ```
 
 ### Model Definitions
+### Custom Model Methods
+
 Keep custom model methods at the top of the file and refer to named functions
 defined later, rather than anonymous functions.
 
