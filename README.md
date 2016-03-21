@@ -70,6 +70,35 @@ var express = require('express');
 var fs = require('fs');
 var uuid = require('uuid');
 ```
+
+Keep constants separate from main variables and use "screaming snake case"
+
+*Why?:* Keeping them separate makes it easy to see what constants are available for use in the file and which are missing
+
+*Why?:* External constants are constants and should be addressed as such (general programming convention)
+
+*Why?:* Required constants mimic `enum`s from other languages
+
+```javascript
+/* Avoid */
+var fs = require('fs');
+var someConstant = require('./constants/some-constant');
+var _ = require('lodash');
+var anotherConstant = require('./constants/another-constant');
+var express = require('express');
+```
+
+
+```javascript
+/* Avoid */
+var ANOTHER_CONSTANT = require('./constants/another-constant');
+var SOME_CONSTANT = require('./constants/some-constant');
+
+var fs = require('fs');
+var _ = require('lodash');
+var express = require('express');
+```
+
 ### Custom Model Methods
 
 Keep custom model methods at the top of the file and refer to named functions
