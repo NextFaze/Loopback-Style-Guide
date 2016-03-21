@@ -49,7 +49,27 @@ module.exports = function(app) {
 // etc...
 ```
 
-### Model Definitions
+### Variable Declarations
+
+Keep variable names in alphabetical order
+
+*Why?:* Easier to read and easier to find what you are looking for.
+
+```javascript
+/* Avoid */
+var fs = require('fs');
+var uuid = require('uuid');
+var _ = require('lodash');
+var express = require('express');
+```
+
+```javascript
+/* Recommeded */
+var _ = require('lodash');
+var express = require('express');
+var fs = require('fs');
+var uuid = require('uuid');
+```
 ### Custom Model Methods
 
 Keep custom model methods at the top of the file and refer to named functions
