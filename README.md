@@ -94,9 +94,9 @@ var express = require('express');
 var ANOTHER_CONSTANT = require('./constants/another-constant');
 var SOME_CONSTANT = require('./constants/some-constant');
 
-var fs = require('fs');
 var _ = require('lodash');
 var express = require('express');
+var fs = require('fs');
 ```
 
 ### Custom Model Methods
