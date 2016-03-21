@@ -90,7 +90,7 @@ var express = require('express');
 
 
 ```javascript
-/* Avoid */
+/* Prefer */
 var ANOTHER_CONSTANT = require('./constants/another-constant');
 var SOME_CONSTANT = require('./constants/some-constant');
 
