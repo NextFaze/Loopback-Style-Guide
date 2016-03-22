@@ -124,15 +124,15 @@ function addClientId() {
 ```
 
 ### Overall Model Definition Layout
-Should keep the definition code organised.
+Limit custom methods/endpoints/observers to single-line definitions that reference functions to be hoisted and keep them at the top of the file.
 
-*Why?*: What are the custom endpoints I can call?
+*Why?:* It just keeps things organized
+*Why?:* It allows the reader to quickly read the top few lines of the model definition and answer important questions:
 
-*Why?*: What requests are being intercepted?
-
-*Why?*: What methods are being intercepted?
-
-*Why?*: What other custom methods etc can I call?
+- What are the custom endpoints I can call?
+- What requests are being intercepted?
+- What methods are being intercepted?
+- What other custom methods etc can I call?
 
 ```javascript
 /* Avoid */
