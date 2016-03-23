@@ -2,6 +2,15 @@ This is very work-in-progress but, in general, a central point to keep track
 of Loopback's various idiosyncrasies and define some best practices when
 working with Loopback.
 
+1. [Project Structure](#project-structure)
+2. [Variable Declarations](#variable-declarations)
+3. [Custom Model Methods](#custom-model-methods)
+4. [Observers and Remote Hooks](#observers-and-remote-hooks)
+5. [Model Definition Layout](#model-definition-layout)
+6. [Debugging](#debugging)
+7. [Remote Methods](#remote-methods)
+8. [Promises](#promises)
+
 ### Project Structure
 
 Prefer more, smaller files.
@@ -147,6 +156,7 @@ function listUserClients() {
 
 
 ### Observers and Remote Hooks
+
 Prefer `Model.beforeRemote` over `Model.observe` unless you are sure that you
 always want the functionality to trigger.
 
@@ -174,10 +184,13 @@ function addClientId() {
 }
 ```
 
-### Overall Model Definition Layout
+### Model Definition Layout
 Limit custom methods/endpoints/observers to single-line definitions that reference functions to be hoisted and keep them at the top of the file.
+Try to limit the `Model.js` file to only declarations of remote methods/observers etc and keep the implementation of these to separate files
+to be `require()`d.
 
 *Why?:* It just keeps things organized
+*Why?:* Separate files leads to fewer merge conflicts and less daunting files
 *Why?:* It allows the reader to quickly read the top few lines of the model definition and answer important questions:
 
 - What are the custom endpoints I can call?
@@ -354,7 +367,7 @@ var debug = require('debug')('models:custom:ModelB');
 // $ DEBUG=models:custom:* node .
 ```
 
-### Remote methods
+### Remote Methods
 
 Be careful with remote hook observers on certain properties. Instance methods
 may require `prototype.{method}` in the observer:
