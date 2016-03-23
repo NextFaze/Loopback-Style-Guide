@@ -381,7 +381,7 @@ Prefer promises over callbacks
 
 *Why?*: It's easier to separate out components in a promise chain into separate functions
 
-**NOTE** Not all built in Loopback methods are promisified, and some have broken promises: (https://github.com/strongloop/loopback/issues/418#issue-38984704)[https://github.com/strongloop/loopback/issues/418#issue-38984704].
+**NOTE** Not all built in Loopback methods are promisified, and some have broken promises [see here](https://github.com/strongloop/loopback/issues/418#issue-38984704).
 In cases where promises are not supported, prefer to add custom promises over using callbacks for the reasons stated above
 
 ```javascript
