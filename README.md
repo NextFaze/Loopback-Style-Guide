@@ -369,6 +369,9 @@ Model.beforeRemote('updateAttributes', interceptUpdate);
 Model.beforeRemote('prototype.updateAttributes', interceptUpdate);
 ```
 
+See [this table](https://docs.strongloop.com/display/public/LB/Operation+hooks#Operationhooks-Overview) for a list
+of the default observers and remote hooks.
+
 
 ### Promises
 
