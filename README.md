@@ -231,7 +231,7 @@ module.exports = function(Model) {
 ```
 
 ```javascript
-/* Prefer */
+/* Better */
 var async = require('async'); //example only
 var debug = require('debug'); // example only
 
@@ -268,6 +268,31 @@ module.exports = function(Model) {
     // stuff
   }
   // etc...
+}
+```
+
+
+```javascript
+/**
+ *  Best - model definition only describes the model and no implementation
+ *  of the components. This leads to less merge conflicts
+ */
+
+var async = require('async'); //example only
+var debug = require('debug'); // example only
+
+module.exports = function(Model) {
+  // Remote Methods
+  Model.remoteMethod('doSomething', require('./Model/doSomethingConfig'));
+  Model.remoteMethod('doOneThing', require('./Model/doOneThingConfig'));
+
+  // Observers
+  Model.observe('count', require('./Model/doAnotherThing'));
+  Model.observe('find', require('./Model/beforeFind'));
+
+  // Remote Hooks
+  Model.beforeRemote('remoteMethod1', require('./Model/remoteMethod1'));
+  Model.afterRemote('remoteMethod2', require('./Model/remoteMethod2'));
 }
 ```
 
