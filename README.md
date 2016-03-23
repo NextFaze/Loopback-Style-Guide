@@ -174,6 +174,102 @@ function addClientId() {
 }
 ```
 
+### Overall Model Definition Layout
+Limit custom methods/endpoints/observers to single-line definitions that reference functions to be hoisted and keep them at the top of the file.
+
+*Why?:* It just keeps things organized
+*Why?:* It allows the reader to quickly read the top few lines of the model definition and answer important questions:
+
+- What are the custom endpoints I can call?
+- What requests are being intercepted?
+- What methods are being intercepted?
+- What other custom methods etc can I call?
+
+```javascript
+/* Avoid */
+var debug = require('debug'); // example only
+var async = require('async'); //example only
+
+module.exports = function(Model) {
+
+  Model.doOneThing = function(input, cb) {
+    // ... do one thing
+  }
+
+  Model.remoteMethod('doSomething', {
+    http: {
+      //config here
+    },
+    accepts: [
+      // config here
+    ],
+    returns: {
+      //more config here
+    }
+  })
+
+  Model.doSomething = function(input, cb) {
+    // ... do something
+  }
+
+  Model.observe('count', function(ctx, next) {
+    // ...
+  });
+
+  Model.remoteMethod('doOneThing', {
+    http: {
+      // config
+    },
+    accepts: {
+      // config
+    },
+    returns: {
+      // config
+    }
+  });
+}
+```
+
+```javascript
+/* Prefer */
+var async = require('async'); //example only
+var debug = require('debug'); // example only
+
+module.exports = function(Model) {
+  // Remote Methods
+  Model.remoteMethod('doSomething', doSomethingConfig());
+  Model.remoteMethod('doOneThing', doOneThingConfig());
+
+  // Observers
+  Model.observe('count', doAnotherthing());
+  Model.observe('find', doSomethingElse());
+
+  // Remote Hooks
+  Model.beforeRemote('remoteMethod1', beforeRemoteMethod1Config());
+  Model.afterRemote('remoteMethod2', afterRemoteMethod2Config());
+
+  // Methods
+  function afterRemoteMethod2Config() {
+    // stuff
+  }
+  function beforeRemoteMethod1Config() {
+    // stuff
+  }
+  function doOneThing() {
+    // stuff
+  }
+  function doAnotherThing() {
+    // stuff
+  }
+  function doOneThingConfig() {
+    // stuff
+  }
+  function doAnotherThingConfig() {
+    // stuff
+  }
+  // etc...
+}
+```
 
 ### Debugging
 
