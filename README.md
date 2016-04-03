@@ -462,3 +462,25 @@ function putLeftFootIn() {
 }
 // ... etc
 ```
+
+Prefer returning promise or callback but not both
+
+*Why?*: `strong-remoting` freaks out if we return a callback AND a promise see [this](https://gist.github.com/pulkitsinghal/8b74ece52975424ff2b9) and [this](https://groups.google.com/forum/#!topic/loopbackjs/QQfDSNT0DMA) for details.
+
+```javascript
+/* Avoid */
+.then(function(result) {
+  cb(null, result);
+  return Promise.resolve(result);
+});
+```
+
+```javascript
+/* Prefer */
+.then(function(result) {
+  if(cb) {
+    return cb(null, result);
+  }
+  return Promise.resolve(result);
+});
+```
